@@ -2,6 +2,17 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 
 
+
+### hip new beta version aliases ###
+
+alias lesync='rsync'
+alias lepush='rsync -avzr ~/.data/ hydra:~/.data/'
+alias lepull='rsync -avzr hydra:~/.data/ ~/.data/'
+
+
+
+
+
 # Headers
   
 # use vim for git checkout, not nano
@@ -109,12 +120,8 @@ fi
 		alias cmdlist='compgen -abc -A function'
                 alias gimme='sudo apt-get install'
                 alias tweak="source "$PS1_PATH"$PS1_FILE"
-                alias hide='source '"$PS1_PATH"".PS1.anon"
-                alias unhide='tweak'
 		alias 192='nmap -sP 192.168.0-1.0/24'
-		alias me='ifconfig | igrep inet'
 		alias count="lsg -c"
-                alias countr='lsgr -c'
 		alias dir='ls -d */'
                 alias pub='chmod 755 *' # as in publish
                 alias rpub='chmod -R 755 *'
