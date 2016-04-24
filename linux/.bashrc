@@ -1,22 +1,22 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
+# ~./bashrc: executed by bash(1) for non-login shells
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-
-
-
-### hip new beta version aliases ###
-
-alias lesync='rsync'
-alias lepush='rsync -avzr ~/.data/ hydra:~/.data/'
-alias lepull='rsync -avzr hydra:~/.data/ ~/.data/'
-
-
-
-
 
 # Headers
   
 # use vim for git checkout, not nano
 export GIT_EDITOR=vim
+
+
+# add various to PATH
+# with scpecial xcrysden alias
+
+source ~/.qepath
+source ~/.xcrysdenPath
+source ~/.gdisPath
+alias pseudofetch='ls --color=never ~/.data/PSEUDOPOTENTIALS/ | egrep --color=never' 
+alias ngrep='grep --color=never'
+alias nls='ls --color=never'
+alias ios="source ~/.ios"
 
 # Set PS1
 #source "$PS1_PATH""$PS1_FILE"
@@ -81,9 +81,10 @@ if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
         # We have color support; assume it's compliant with Ecma-48
         # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-        # a case would tend to support setf rather than setaf.)
+        
+# a case would tend to support setf rather than setaf.)
         color_prompt=yes
-    else
+t    else
         color_prompt=
     fi
 fi
@@ -91,10 +92,13 @@ fi
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
         alias ls='ls --color'
-        LS_COLORS='di=96:fi=0:ln=33:pi=5:so=5:bd=5:cd=5:or=37:mi=0:ex=92:*.rpm=90:*.deb=92:*.run=1;92:*.png=34:*.bmp=34:*.BMP=34:*.jpeg=94:*.jpg=94:*.JPG=94:*.JPEG=94:*.xcf=34:*.tiff=1;34:*.TIFF=1;34:*.gif=1;94:*.aux=90:*.bib=34:*.log=1;90:*.pdf=1;93:*.tex=33:*.zip=31:*.tgz=91:*.tar.gz=91:*.tar.bz2=91:*.exe=1;94;100:*.docx=1;94;100:*.doc=1;94;100:*.xlsx=1;94;100:*.xls=1;94;100:*.pptx=1;94;100:*.nb=31:*.math=91:*.m=31:*__pycache__=90:*.py=93:*.pyc=90:*.sh=32:*.rb=95:*.pl=1;94:*.c=31:*.h=91:*.o=32:*.md=33:*README=1;33:*LICENSE=33:*.txt=93:*.rtf=35:*.ipynb=1;33:*.mp3=31:*.mp4=91:*.mov=1;91:*.xml=34:*.htm=95:*.html=95:*.js=35:*.css=94:*rc=32:*config=1;32:*akefile=1;91:*.in=32:*.out=31:*.xyz=34:*.mol=90:*.cif=94:*.CIF=94:*.pwi=32:*.pwo=31:*.xsf=35:*.UPF=00;92;100'
+      
+
+	LS_COLORS='di=96:fi=0:ln=33;100:pi=5:so=5:bd=5:cd=5:or=37:mi=0:ex=92:*.rpm=90:*.deb=92:*.run=1;92:*.png=34:*.bmp=34:*.BMP=34:*.jpeg=94:*.jpg=94:*.JPG=94:*.JPEG=94:*.xcf=34:*.tiff=1;34:*.TIFF=1;34:*.gif=1;94:*.aux=90:*.bib=34:*.log=1;90:*.pdf=1;93:*.tex=33:*.zip=31:*.tgz=91:*.tar.gz=91:*.tar.bz2=91:*.exe=1;94;100:*.docx=1;94;100:*.doc=1;33:*.xlsx=1;94;100:*.xls=1;94;100:*.pptx=1;94;100:*.nb=31:*.math=91:*.m=31:*__pycache__=90:*.py=93:*.pyc=90:*.bash=92:*.sh=92:*.awk=94:*.rb=93:*.pl=93:*.c=31:*.h=91:*.o=32:*.md=33:*README=1;33:*LICENSE=33:*.txt=33:*.rtf=35:*.ipynb=1;33:*.mp3=31:*.mp4=31:*.avi=91:*.ogv=91:*.mov=91:*.xml=33:*.htm=33:*.html=33:*.js=93:*.css=34:*rc=32:*config=1;33:*akefile=1;91:*.in=32:*.out=31:*.xyz=34:*.sdf=1;34:*.mol=90:*.cif=94:*.CIF=94:*.pwi=32:*.pwo=31:*.ps=35:*.xsf=35:*.UPF=2:*.magres=36:*.dat=37:*.  @info=1;92;100'
        
-        export LS_COLORS
-                ##########################################
+export LS_COLORS
+                
+##########################################
                 ##      See color codes file .codes     ##
                 ##########################################
                 alias grep='grep --color=auto'
@@ -119,9 +123,8 @@ fi
                 alias ok='eval $($(fc -ln -1) 2>&1 | sed -n 2p)'
 		alias cmdlist='compgen -abc -A function'
                 alias gimme='sudo apt-get install'
-                alias tweak="source "$PS1_PATH"$PS1_FILE"
 		alias 192='nmap -sP 192.168.0-1.0/24'
-		alias count="lsg -c"
+		alias me='ifconfig | igrep inet'
 		alias dir='ls -d */'
                 alias pub='chmod 755 *' # as in publish
                 alias rpub='chmod -R 755 *'
@@ -162,5 +165,7 @@ man() {
 # default cmd prompt defined in .bashrc
 
 export PROMPT_COMMAND='echo -en "\033[m\033[38;5;2m"$(( `sed -n "s/MemFree:[\t ]\+\([0-9]\+\) kB/\1/p" /proc/meminfo`/1024))"\033[1;38;5;22m/"$((`sed -n "s/MemTotal:[\t ]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo`/1024 ))MB   ""' \
-export PS1='\[\033[1;33m\]\u\[\033[0;36m\]@\[\033[1;32m\]\h\[\033[1;37m\]:\[\033[1;31m\]\w \[\033[1;96m\]\$ \[\033[0m\]'
 
+
+
+export PS1="\[\033[0;93m\]\u\[\033[0;36m\]@\[\033[0;92m\]\h\[\033[0;37m\]:\[\033[0;91m\]\w \[\033[0;96m\]\$ \[\033[0m\]"
