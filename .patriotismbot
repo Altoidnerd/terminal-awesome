@@ -76,8 +76,10 @@ else
    spiders1="We have nothing to fear but fear itself"
    spiders2="That... and spiders"
 
+   eagles1="Hey baby, on a scale of 1 to America"
+   eagles2="How free are you tonight?"
 
-   messages=(plain dontrun tisofthee proud fiftystars hateus undefeated party ring deal livefree indahood rockandroll freedom combination spiders )
+   messages=(plain dontrun tisofthee proud fiftystars hateus undefeated party ring deal livefree indahood rockandroll freedom combination spiders eagles)
    # pick random messages
    nummsgs=${#messages[*]}
    msg=${messages[ $((RANDOM % $nummsgs)) ]}
