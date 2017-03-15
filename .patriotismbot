@@ -1,0 +1,144 @@
+#!/bin/bash
+
+#cli args
+
+# -a flag enables asterisk instead of unicode star
+if [[ "$1" == "-a" ]] ; then
+   star="*"
+   shift
+else
+   star="★"
+fi
+
+if [[ "$1" == "-m1" ]] ; then
+   shift
+   msg1_unformatted=""
+   msg2_unformatted=""
+   while [[ "$#" -ge 1 && "$1" != "-m2" ]] ; do
+      msg1_unformatted+="$1 "
+      shift
+   done
+   shift
+   while [[ "$#" -ge 1 ]] ; do
+      msg2_unformatted+="$1 "
+      shift
+   done
+   #remove trailing space just inserted above
+   msg1_unformatted=${msg1_unformatted%% }
+   msg2_unformatted=${msg2_unformatted%% }
+else
+   #messages
+   #you need to pick a prefix, than name two strings with that prefix each with suffix 1 or 2
+   #then add that prefix to the messages array
+   #all messages will be capitalized
+   dontrun1="THESE COLORS"
+   dontrun2="DON'T RUN"
+
+   tisofthee1="MY COUNTRY"
+   tisofthee2="'TIS OF THEE"
+
+   proud1="PROUD TO BE"
+   proud2="AN AMERICAN"
+
+   fiftystars1="FIFTY STARS"
+   fiftystars2="AND SOME AMOUNT OF STRIPES"
+
+   hateus1="THEY HATE US"
+   hateus2="CUZ THEY AIN'T US"
+
+   undefeated1="UNDEFEATED SINCE 1776*"
+   undefeated2="*NO ASTERISK NEEDED"
+
+   party1="AIN'T NO PARTY"
+   party2="LIKE A BOSTON TEA PARTY"
+
+   ring1="FROM EVERY MOUNTAINSIDE"
+   ring2="LET FREEDOM RING"
+
+   deal1="BEST PLACE ON EARTH"
+   deal2="DEAL WITH IT"
+
+   livefree1="LIVE FREE"
+   livefree2="OR DIE TRYING"
+
+   indahood1="NUMBER ONE IN THE HOOD"
+   indahood2="G"
+
+   rockandroll1="ROCK AND ROLL MUSIC"
+   rockandroll2="YOU'RE WELCOME, WORLD"
+
+   freedom1="FREEDOM ISN'T FREE"
+   freedom2="THERE'S A HEFTY, uh, FEE"
+
+   combination1="I'M AT THE PIZZA HUT"
+   combination2="I'M AT THE TACO BELL"
+
+   spiders1="We have nothing to fear but fear itself"
+   spiders2="That... and spiders"
+
+
+   messages=(plain dontrun tisofthee proud fiftystars hateus undefeated party ring deal livefree indahood rockandroll freedom combination spiders )
+   # pick random messages
+   nummsgs=${#messages[*]}
+   msg=${messages[ $((RANDOM % $nummsgs)) ]}
+   eval msg1_unformatted=\$$msg"1"
+   eval msg2_unformatted=\$$msg"2"
+fi
+
+# probably don't need to edit below here...
+
+# set colots
+white_on_blue="\033[1;38;5;15;48;5;19m"
+red_on_white="\033[1;38;5;160;48;5;15m"
+white_on_red="\033[1;38;5;15;48;5;160m"
+color_off="\033[0m"
+nl="$color_off\n"
+
+len1=${#msg1_unformatted}
+len2=${#msg2_unformatted}
+
+# ensure bars are long enough
+max () { printf "%s\n" "$@" | sort -g | tail -n1;  }
+short_bar_length=$(max 30 $(expr $len1 + 2)  $(expr $len2 + 2))
+long_bar_length=`expr $short_bar_length + 21` #21 is length of stars portion
+
+six_star=$white_on_blue"$star   $star   $star   $star   $star   $star"$color_off
+five_star=$white_on_blue"  $star   $star   $star   $star   $star  "$color_off
+short=$(printf "%${short_bar_length}s")
+short_red_bars=$white_on_red$short$nl
+short_white_bars=$red_on_white$short$nl
+long=$(printf "%${long_bar_length}s")
+long_red_bars=$white_on_red$long$nl
+long_white_bars=$red_on_white$long$nl
+
+diff1=`expr $short_bar_length - $len1`
+diff2=`expr $short_bar_length - $len2`
+lpad1_size=`expr $diff1 / 2`
+lpad2_size=`expr $diff2 / 2`
+lpad1=$(printf "%${lpad1_size}s")
+lpad2=$(printf "%${lpad2_size}s")
+rpad1=$(printf "%`expr $diff1 - $lpad1_size`s")
+rpad2=$(printf "%`expr $diff2 - $lpad2_size`s")
+msg1_capitalized=$(echo $msg1_unformatted | tr '[:lower:]' '[:upper:]')
+msg2_capitalized=$(echo $msg2_unformatted | tr '[:lower:]' '[:upper:]')
+msg1=$red_on_white$lpad1$msg1_capitalized$rpad1$nl
+msg2=$red_on_white$lpad2$msg2_capitalized$rpad2$nl
+
+output=$nl
+output+=$six_star$short_red_bars
+output+=$five_star$short_white_bars
+output+=$six_star$short_red_bars
+output+=$five_star$short_white_bars
+output+=$six_star$short_red_bars
+output+=$five_star$msg1
+output+=$six_star$short_red_bars
+output+=$five_star$msg2
+output+=$six_star$short_red_bars
+output+=$long_white_bars
+output+=$long_red_bars
+output+=$long_white_bars
+output+=$long_red_bars
+output+=$long_white_bars
+output+=$long_red_bars
+
+echo -ne "$output"
