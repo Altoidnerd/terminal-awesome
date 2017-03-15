@@ -1,21 +1,15 @@
 # Terminal Awesome
 
-![colorful teminal with rainbowfy](http://i.imgur.com/ut6pR8i.png)
-![aliases galore](http://i.imgur.com/jFZPPuW.png?1)
+![Ask and you shall receive](img/ask_nice.png)
+![but remember to be firm](img/but_be_firm.png)
+![speak naturally](img/be_yourself.png)
 
-### Ubuntu/debian:
-    
-    cd terminal-awesome/linux
-    cp .* ~ && bash
 
-### OSX
 
-    cd terminal-awesome/osx
-    cd .* ~ && bash
+# try without installing
 
-### optional
+    source .bashrc
 
-    # gives you some .PS1 files to modify. To use them, "source .PS1"
-    
-    cd terinal-awesome
-    cp .* ~
+### hardcore installation
+
+    cp .bashrc ~ && bash
