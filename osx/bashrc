@@ -1,0 +1,86 @@
+alias startpostgres='/Applications/Postgres.app/Contents/Versions/12/bin/psql -p5432 "altoidnerd"
+psq'
+NOCOLOR='\033[0m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+LIGHTGRAY='\033[0;37m'
+DARKGRAY='\033[1;30m'
+LIGHTRED='\033[1;31m'
+LIGHTGREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+LIGHTBLUE='\033[1;34m'
+LIGHTPURPLE='\033[1;35m'
+LIGHTCYAN='\033[1;36m'
+WHITE='\033[1;37m'
+
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+#export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+#export PS1='\[\033[1;33m\]\u\[\033[1;37m\]@\[\033[1;32m\]\h\[\033[1;37m\]:\[\033[1;32m\]\w $(parse_git_branch) \[\033[1;36m\]\$ \[\033[0m\]'
+
+export PROMPT_COMMAND='echo -en "\033[0;36m$(parse_git_branch) \033"'
+#export PS1="\[\033[0;93m\]\u\[\033[0;36m\]@\[\033[0;92m\]\h\[\033[0;37m\]:\[\033[0;91m\]\w\[\033[0;96m\] \[\033[0;36m\]$(parse_git_branch)\[\033 \n> \[\033[0m\]"
+export PS1="\[\033[0;93m\]\u\[\033[0;36m\]@\[\033[0;92m\]\h\[\033[0;37m\]:\[\033[0;91m\]\w\[\033[0;96m\] \n> \[\033[0m\]"
+
+
+
+
+
+alias push='git add * && git commit -am "updates" && git push'
+alias pull='git pull'
+alias ll='ls -l'
+#alias la='ls -la'
+alias l='ls'
+
+export PYTHONPATH='/Users/altoidnerd/Desktop/python-pwscf/src/'
+
+
+alias go='xelatex main && bibtex main && xelatex main && xelatex main'
+alias show='open main.pdf'
+	LS_COLORS='di=96:fi=0:ln=33;100:pi=5:so=5:bd=5:cd=5:or=37:mi=0:ex=92:*.rpm=90:*.deb=92:*.run=1;92:*.png=34:*.bmp=34:*.BMP=34:*.jpeg=94:*.jpg=94:*.JPG=94:*.JPEG=94:*.xcf=34:*.tiff=1;34:*.TIFF=1;34:*.gif=1;94:*.aux=90:*.bib=34:*.log=1;90:*.pdf=1;93:*.tex=33:*.zip=31:*.tgz=91:*.tar.gz=91:*.tar.bz2=91:*.exe=1;94;100:*.docx=1;94;100:*.doc=1;33:*.xlsx=1;94;100:*.xls=1;94;100:*.pptx=1;94;100:*.nb=31:*.math=91:*.m=31:*__pycache__=90:*.py=93:*.pyc=90:*.bash=92:*.sh=92:*.awk=94:*.rb=93:*.pl=93:*.c=31:*.h=91:*.o=32:*.md=33:*README=1;33:*LICENSE=33:*.txt=33:*.rtf=35:*.ipynb=1;33:*.mp3=31:*.mp4=31:*.avi=91:*.ogv=91:*.mov=91:*.xml=33:*.htm=33:*.html=33:*.js=93:*.css=34:*rc=32:*config=1;33:*akefile=1;91:*.in=32:*.out=31:*.xyz=34:*.sdf=1;34:*.mol=90:*.cif=94:*.CIF=94:*.pwi=32:*.pwo=31:*.ps=35:*.xsf=35:*.UPF=2:*.magres=36:*.sites=1;36:*.dat=37:*.  @info=1;92;100:*.show=1;95;101'
+export LS_COLORS
+
+alias la='exa'
+alias lf='la -lF'
+
+. ~/.patriotismbot
+
+
+
+export PORTNO='3306'
+export PORT='3306'
+
+
+export XMLLINT_INDENT='    '
+
+
+
+export dsid='i-0e0fbc89fa5b13fc3'
+alias startds="aws ec2 start-instances --instance-ids $dsid"
+alias stopds="aws ec2 stop-instances --instance-ids $dsid"
+alias dsstat="aws ec2 describe-instance-status --instance-ids $dsid" 
+alias dsdns="aws ec2 describe-instances --instance-ids $dsid --query 'Reservations[].Instances[].PublicDnsName'"
+
+
+export ds2id='i-04629d271627bfd55'
+alias startds2="aws ec2 start-instances --instance-ids $ds2id"
+alias stopds2="aws ec2 stop-instances --instance-ids $ds2id"
+alias ds2stat="aws ec2 describe-instance-status --instance-ids $ds2id" 
+alias ds2dns="aws ec2 describe-instances --instance-ids $ds2id --query 'Reservations[].Instances[].PublicDnsName'"
+
+
+#alias stopall='stopbc && stopgc && stopbert'
+#alias startall='startbc && startgc && startbert'
+
+#alias allstat='echo "gcstat" && gcstat && echo "bcstat" && bcstat && echo "bertstat" && bertstat && echo "ecstat" && ecstat && echo "ec2stat" && ec2stat && echo "ec3stat" && ec3stat'
+
+
+
+#alias allstat='echo "gcstat" && gcstat && echo "bcstat" && bcstat && echo "bertstat" && bertstat && echo "ecstat" && ecstat && echo "ec2stat" && ec2stat && echo "ec3stat" && ec3stat'
+alias sqlget='mysql -h 127.0.0.1 -P 3306 -u root -p -B'
