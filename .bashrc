@@ -23,14 +23,13 @@ man() {
                         man "$@"
 }
 
-# display memory used / memory avail in prompt cmd before PS1
-export PROMPT_COMMAND='echo -en "\033[m\033[38;5;2m"$(( `sed -n "s/MemFree:[\t ]\+\([0-9]\+\) kB/\1/p" /proc/meminfo`/1024))"\033[1;38;5;22m/"$((`sed -n "s/MemTotal:[\t ]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo`/1024 ))MB   ""' \
 
 # display current git branch
 parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-export PROMPT_COMMAND='echo -en "\033[0;36m $(parse_git_branch) \033"'
+# and memory usage to the left of PS1
+export PROMPT_COMMAND='echo -en "\033[0;36m $(parse_git_branch) \033""\033[m\033[38;5;2m"$(( `sed -n "s/MemFree:[\t ]\+\([0-9]\+\) kB/\1/p" /proc/meminfo`/1024))"\033[1;38;5;22m/"$((`sed -n "s/MemTotal:[\t ]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo`/1024 ))MB   ""' \
 
 # what box is this?
 MACHINE_ID="shared"
